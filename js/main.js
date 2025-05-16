@@ -64,3 +64,38 @@ numberButtons.forEach((btn)=>{
     });
 });
 
+let operatorButtons = document.querySelectorAll('.operator-btn');
+operatorButtons.forEach((btn)=>{
+    btn.addEventListener('click', (e)=>{
+        let value = e.target.value;
+        if(value === 'clear') {
+            resetVariables();
+            updateDisplayScreenContent(''); 
+        }else if(value === '=' && firstOPerand && secondOPerand) {
+            let result  = operate(firstOPerand,operator,secondOPerand);
+            resetVariables();
+            firstOPerand = result;
+            isFirstOperandTurn = false;
+            updateDisplayScreenContent(firstOPerand);
+        }else if(value !== '=') {
+            if(firstOPerand && !secondOPerand) { 
+                operator = value;
+                isFirstOperandTurn = false;
+            }else if(firstOPerand && secondOPerand) {
+                let result  = operate(firstOPerand,operator,secondOPerand);
+                firstOPerand = result;
+                operator = value;
+                secondOPerand = '';
+                updateDisplayScreenContent(firstOPerand);
+            }
+        } 
+    })
+})
+
+function resetVariables() {
+    firstOPerand = '';
+    secondOPerand = '';
+    operator = '';
+    isFirstOperandTurn = true;
+}
+
