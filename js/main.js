@@ -75,7 +75,6 @@ operatorButtons.forEach((btn)=>{
             let result  = operate(firstOPerand,operator,secondOPerand);
             resetVariables();
             firstOPerand = result;
-            isFirstOperandTurn = false;
             updateDisplayScreenContent(firstOPerand);
         }else if(value !== '=') {
             if(firstOPerand && !secondOPerand) { 
