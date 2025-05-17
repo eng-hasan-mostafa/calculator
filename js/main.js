@@ -53,7 +53,7 @@ numberButtons.forEach((btn)=>{
 
         if(clickedDigit !== '.') {
             number += clickedDigit;
-        }else if(firstOPerand) {
+        }else if(firstOPerand && !number.includes('.')) {
             number += clickedDigit;
         }
         updateDisplayScreenContent(number);
