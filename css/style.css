@@ -28,6 +28,8 @@
     text-align: right;
     font-weight: bold;
     font-size: 30px;
+    max-width: 290px;
+    overflow: hidden;
 }
 
 button {

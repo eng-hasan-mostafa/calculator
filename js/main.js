@@ -50,17 +50,18 @@ numberButtons.forEach((btn)=>{
     btn.addEventListener('click', (e)=>{
         let clickedDigit = e.target.value;
         let number = (isFirstOperandTurn? firstOPerand: secondOPerand);
-
-        if(clickedDigit !== '.') {
-            number += clickedDigit;
-        }else if(firstOPerand && !number.includes('.')) {
-            number += clickedDigit;
+        if(number.length < 17) {
+            if(clickedDigit !== '.') {
+                number += clickedDigit;
+            }else if(firstOPerand && !number.includes('.')) {
+                number += clickedDigit;
+            }
+            updateDisplayScreenContent(number);
+            (isFirstOperandTurn?
+             firstOPerand = number:
+             secondOPerand = number
+            );
         }
-        updateDisplayScreenContent(number);
-        (isFirstOperandTurn?
-         firstOPerand = number:
-         secondOPerand = number
-        );
     });
 });
 
@@ -75,7 +76,7 @@ operatorButtons.forEach((btn)=>{
             let result  = operate(firstOPerand,operator,secondOPerand);
             resetVariables();
             firstOPerand = result;
-            updateDisplayScreenContent(firstOPerand);
+            updateDisplayScreenContent(roundResult(firstOPerand));
         }else if(value !== '=') {
             if(firstOPerand && !secondOPerand) { 
                 operator = value;
@@ -85,7 +86,7 @@ operatorButtons.forEach((btn)=>{
                 firstOPerand = result;
                 operator = value;
                 secondOPerand = '';
-                updateDisplayScreenContent(firstOPerand);
+                updateDisplayScreenContent(roundResult(firstOPerand));
             }
         } 
     })
@@ -98,3 +99,14 @@ function resetVariables() {
     isFirstOperandTurn = true;
 }
 
+function roundResult(result) {
+    result = String(result);
+    if(result.length >= 17) {
+        result = String(Math.round(result));
+        if(result.length >= 17) {
+            result = result.slice(0, 16);
+            result += '..';
+        }
+    }
+    return result;
+}
